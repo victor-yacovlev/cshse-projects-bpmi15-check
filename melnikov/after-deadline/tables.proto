@@ -1,0 +1,82 @@
+syntax = "proto3";
+package tables;
+
+message Cell {
+  string text = 1;
+  float textSize = 2;
+}
+
+message RandomCellGroup {
+  message PosCell {
+    Cell cell = 1;
+    uint32 x = 2;
+    uint32 y = 3;
+  }
+  repeated PosCell cells = 1;
+}
+
+message SquareCellGroup {
+  uint32 x = 1;  // top-left corner
+  uint32 y = 2;
+  uint32 w = 3;
+  uint32 h = 4;
+  repeated Cell cells = 5;  // one-dimensional array, row after row
+}
+
+message CellGroup {
+  oneof CellGroup {
+    RandomCellGroup RandomCellGroup = 1;
+    SquareCellGroup SquareCellGroup = 2;
+  }
+}
+
+message Row {
+  float height = 1;
+}
+
+message Column {
+  float width = 1;
+}
+
+// --- server messages
+message SMessage {
+  oneof SMessage {
+    SStatus Status = 1;
+    SCells Cells = 2;
+    SSizes Sizes = 3;
+  }
+}
+
+message SCells {
+  CellGroup cells = 1;
+}
+
+message SSizes {
+  repeated Row rows = 1;
+  repeated Column columns = 2;
+}
+
+message SStatus {
+  bool ok = 1;
+  string error = 2;
+  string replyTo = 3;
+}
+
+// --- client messages
+message CMessage {
+  oneof CMessage {  // replies in comments
+    CSizes Sizes = 1;  // SSizes
+    CCells Cells = 2;  // SCells
+    CCellsUpdate CellsUpdate = 3;  // SStatus
+  }
+}
+
+message CSizes { }  // deprecated
+
+message CCells {
+  CellGroup cells = 1;  // do not fill cells field inside CellGroup
+}
+
+message CCellsUpdate {
+  CellGroup cells = 1;  // cells field inside CellGroup is required
+}

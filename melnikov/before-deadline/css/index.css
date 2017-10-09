@@ -1,0 +1,45 @@
+@media (min-width: 768px) {
+  #info-container {
+    position: relative;
+  }
+
+  #column-select {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 80px;
+}
+
+body, html {
+  height: 100%;
+}
+
+.wrap {
+  height: 100%;
+  overflow: hidden;
+}
+
+#table-container {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
